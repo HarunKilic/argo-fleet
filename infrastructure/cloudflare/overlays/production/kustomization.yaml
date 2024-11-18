@@ -5,7 +5,54 @@ resources:
   - ../../base
 
 patches:
-  - path: patches/deployment-patch.yaml
-  - path: patches/configmap-patch.yaml
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: cloudflared
+        namespace: cloudflare
+      spec:
+        template:
+          spec:
+            containers:
+            - name: cloudflared
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 256Mi
+                limits:
+                  cpu: 400m
+                  memory: 512Mi
+              securityContext:
+                readOnlyRootFilesystem: true
+                runAsNonRoot: true
+                runAsUser: 65534
+                allowPrivilegeEscalation: false
+    target:
+      kind: Deployment
+      name: cloudflared
 
-namespace: cloudflare
+  - patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: cloudflared-config
+        namespace: cloudflare
+      data:
+        config.yaml: |
+          tunnel: c9d6f9e3-ce5a-450d-ace3-f24e9a2a1731
+          credentials-file: /etc/cloudflared/creds/credentials.json
+          ingress:
+            - hostname: "*.novusweb.pro"
+              service: https://ingress-nginx-controller.ingress-nginx.svc.cluster.local:443
+              originRequest:
+                noTLSVerify: true
+                connectTimeout: 10s
+                keepAliveTimeout: 30s
+                keepAliveConnections: 100
+            - service: http_status:404
+          metrics: 0.0.0.0:2000
+          no-autoupdate: true
+    target:
+      kind: ConfigMap
+      name: cloudflared-config
