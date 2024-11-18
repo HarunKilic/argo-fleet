@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cloudflare-tunnel-ingress-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cloudflare-tunnel-ingress-controller
+subjects:
+- kind: ServiceAccount
+  name: cloudflare-tunnel-ingress-controller
+  namespace: cloudflare-tunnel-ingress

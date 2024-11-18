@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-tunnel-ingress-controller
+  namespace: cloudflare-tunnel-ingress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflare-tunnel-ingress-controller
+  template:
+    metadata:
+      labels:
+        app: cloudflare-tunnel-ingress-controller
+    spec:
+      serviceAccountName: cloudflare-tunnel-ingress-controller
+      containers:
+      - name: controller
+        image: ghcr.io/strrl/cloudflare-tunnel-ingress-controller:latest
+        args:
+        - --tunnel-id=c9d6f9e3-ce5a-450d-ace3-f24e9a2a1731
+        - --tunnel-credentials-file=/etc/cloudflared/credentials.json
+        env:
+        - name: TUNNEL_ID
+          valueFrom:
+            secretKeyRef:
+              name: cloudflare-tunnel-credentials
+              key: tunnel-id
+        volumeMounts:
+        - name: cloudflare-credentials
+          mountPath: /etc/cloudflared
+          readOnly: true
+      volumes:
+      - name: cloudflare-credentials
+        secret:
+          secretName: cloudflare-tunnel-credentials
