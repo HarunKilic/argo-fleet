@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: ${GITOPS_REPO}
+    repoURL: https://github.com/harunkilic/argo-fleet
     path: infrastructure/cloudflare/base
     targetRevision: HEAD
   destination:
