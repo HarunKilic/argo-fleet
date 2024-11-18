@@ -16,7 +16,7 @@ patches:
           spec:
             containers:
             - name: controller
-              image: ghcr.io/strrl/cloudflare-tunnel-ingress-controller:v0.0.16  # Use specific version
+              image: ghcr.io/strrl/cloudflare-tunnel-ingress-controller:0.0.16 # Use specific version
               resources:
                 requests:
                   cpu: 200m
