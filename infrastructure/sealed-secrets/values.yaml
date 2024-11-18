@@ -6,3 +6,4 @@ sealed-secrets:
   rbac: 
     create: true
   secretName: sealed-secrets-key
+  createNamespace: true
