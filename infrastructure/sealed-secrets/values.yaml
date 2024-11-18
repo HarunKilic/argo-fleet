@@ -1,0 +1,8 @@
+sealed-secrets:
+  namespace: shared-services
+  fullnameOverride: sealed-secrets
+  serviceAccount:
+    create: true
+  rbac: 
+    create: true
+  secretName: sealed-secrets-key
