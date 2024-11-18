@@ -5,12 +5,12 @@ metadata:
   namespace: cloudflare
 data:
   config.yaml: |
-    tunnel: ${TUNNEL_ID}
+    tunnel: c9d6f9e3-ce5a-450d-ace3-f24e9a2a1731
     credentials-file: /etc/cloudflared/creds/credentials.json
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-      - hostname: "*.${DOMAIN}"
+      - hostname: "*.novusweb.pro"
         service: https://kubernetes.default.svc.cluster.local:443
         originRequest:
           noTLSVerify: true

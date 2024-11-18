@@ -3,7 +3,9 @@ kind: Ingress
 metadata:
   name: nginx
   annotations:
-    external-dns.alpha.kubernetes.io/target: c9d6f9e3-ce5a-450d-ace3-f24e9a2a1731.cfargotunnel.com
+    kubernetes.io/ingress.class: "cloudflare-warp"
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: https
+    cloudflare-tunnel-ingress-controller.strrl.dev/proxy-ssl-verify: "off"
 spec:
   rules:
     - host: test.novusweb.pro
