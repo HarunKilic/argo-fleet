@@ -18,19 +18,17 @@ spec:
       - name: controller
         image: ghcr.io/strrl/cloudflare-tunnel-ingress-controller:latest
         args:
-        - --tunnel-id=c9d6f9e3-ce5a-450d-ace3-f24e9a2a1731
-        - --tunnel-credentials-file=/etc/cloudflared/credentials.json
+        - --cloudflare-account-id=$(CF_ACCOUNT_ID)
+        - --cloudflare-api-token=$(CF_API_TOKEN)
+        - --cloudflare-tunnel-name=k8s-tunnel
         env:
-        - name: TUNNEL_ID
+        - name: CF_ACCOUNT_ID
           valueFrom:
             secretKeyRef:
               name: cloudflare-tunnel-credentials
-              key: tunnel-id
-        volumeMounts:
-        - name: cloudflare-credentials
-          mountPath: /etc/cloudflared
-          readOnly: true
-      volumes:
-      - name: cloudflare-credentials
-        secret:
-          secretName: cloudflare-tunnel-credentials
+              key: account-id
+        - name: CF_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: cloudflare-tunnel-credentials
+              key: api-token
