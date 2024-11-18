@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-apps
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: staging
+            environment: staging
+          - name: production
+            environment: production
+  template:
+    metadata:
+      name: 'nginx-{{environment}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/harunkilic/argo-fleet
+        targetRevision: HEAD
+        path: apps/nginx/overlays/{{environment}}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{environment}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
