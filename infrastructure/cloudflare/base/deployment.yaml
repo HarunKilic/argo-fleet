@@ -30,6 +30,12 @@ spec:
               port: metrics
             initialDelaySeconds: 15
             periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: metrics
+            initialDelaySeconds: 15
+            periodSeconds: 10
           resources:
             requests:
               cpu: 100m
@@ -48,9 +54,6 @@ spec:
         - name: config
           configMap:
             name: cloudflared-config
-            items:
-              - key: config.yaml
-                path: config.yaml
         - name: creds
           secret:
-            secretName: tunnel-credentials[1]
+            secretName: cloudflared-credentials
