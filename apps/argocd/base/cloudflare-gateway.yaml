@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/harunkilic/argo-fleet
-    path: infrastructure/cloudflare-gateway/overlays/production
+    path: infrastructure/cloudflare-gateway/base
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
