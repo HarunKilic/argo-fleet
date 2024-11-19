@@ -9,6 +9,9 @@ spec:
     repoURL: https://github.com/harunkilic/argo-fleet
     targetRevision: HEAD
     path: monitoring/kube-prometheus-stack/base
+    kustomize:
+      buildOptions:
+        - --enable-helm
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
