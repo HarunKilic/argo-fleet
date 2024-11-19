@@ -13,4 +13,5 @@ helmCharts:
     version: 66.2.1
     releaseName: prometheus
     namespace: monitoring
-    valuesFile: prometheus-values.yaml
+    valuesFile: values.yaml
+    includeCRDs: true

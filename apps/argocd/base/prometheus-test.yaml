@@ -8,9 +8,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 66.2.1
-    chart: kube-prometheus-stack
+    repoURL: https://github.com/yourusername/gitops-repo.git
+    targetRevision: HEAD
+    path: monitoring/kube-prometheus-stack/base
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
