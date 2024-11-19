@@ -17,8 +17,6 @@ spec:
       containers:
         - name: cloudflare-gateway
           image: ghcr.io/pl4nty/cloudflare-kubernetes-gateway:latest
-          args:
-            - --ingress-class=cloudflare-tunnel
           env:
             - name: CF_API_TOKEN
               valueFrom:
