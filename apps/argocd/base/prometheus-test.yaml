@@ -1,19 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
-  namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"  # Ensure this runs after CRDs
+  name: kube-prometheus-stack-jokl
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/harunkilic/argo-fleet
-    targetRevision: HEAD
-    path: monitoring/kube-prometheus-stack/base
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
-    server: https://kubernetes.default.svc
-    namespace: monitoring
+    name: ''
+    namespace: jokl-test
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://prometheus-community.github.io/helm-charts'
+    targetRevision: 58.2.2
+    chart: kube-prometheus-stack
+  sources: []
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
