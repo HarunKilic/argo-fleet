@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-gateway
+  namespace: cloudflare-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflare-gateway
+  template:
+    metadata:
+      labels:
+        app: cloudflare-gateway
+    spec:
+      serviceAccountName: cloudflare-gateway
+      containers:
+        - name: cloudflare-gateway
+          image: ghcr.io/pl4nty/cloudflare-kubernetes-gateway:latest
+          args:
+            - --ingress-class=cloudflare-tunnel
+          env:
+            - name: CF_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-credentials
+                  key: api-token
+            - name: CF_ACCOUNT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-credentials
+                  key: account-id
+            - name: CF_TUNNEL_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-credentials
+                  key: tunnel-name
