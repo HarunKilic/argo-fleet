@@ -9,7 +9,7 @@ metadata:
     release: kube-prometheus-stack
 spec:
   destination:
-    namespace: monitoring
+    namespace: argocd
     server: https://kubernetes.default.svc
   project: default
   source:
