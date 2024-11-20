@@ -5,13 +5,8 @@ namespace: monitoring
 
 resources:
   - namespace.yaml
+  - prometheus-operator-crds/application.yaml
+  - prometheus/application.yaml
+  # - prometheus-node-exporter/application.yaml
+  # - grafana/dashboards/argo-cd.yaml
  # - httproute.yaml
-
-helmCharts:
-  - name: kube-prometheus-stack
-    repo: https://prometheus-community.github.io/helm-charts
-    version: 66.2.1
-    releaseName: prometheus
-    namespace: monitoring
-    valuesFile: values.yaml
-    includeCRDs: true
